@@ -25,6 +25,27 @@ class App extends Component {
     })
   }
 
+  // method to bind input and output for each Person component independently
+  changedNameHandler = (event, index) => {
+    const persons = [...this.state.persons];
+    const person = {...persons[index]};
+    person.name = event.target.value;
+    persons[index] = person;
+    this.setState({
+      persons: persons
+    })
+  }
+
+  // method to remove person from the list if his/her name was clicked
+  clickedNameHandler = (index) => {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({
+      persons: persons
+    })
+
+  }
+
   render(){
 
     let persons = null;
@@ -35,7 +56,12 @@ class App extends Component {
           <Person 
             name={person.name} 
             age={person.age}
-            key={index}/>   // key property is necessary for react to optimise re-rendering
+            key={index}       // key property is necessary for react to optimise re-rendering
+            // if binding method needs an event argument and some other - use anonymous function
+            changedName={(event) => this.changedNameHandler(event, index)}
+            // if binding method doesn't needs an event argument, just some other - use bind method
+            clicked={this.clickedNameHandler.bind(this, index)}
+            /> 
         )
       })
     }
