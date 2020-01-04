@@ -43,13 +43,19 @@ class App extends Component {
     this.setState({
       persons: persons
     })
-
   }
 
   render(){
 
+    // Such inline styling doesn't allow to use pseudo and media queries
+    const style = {
+      backgroundColor: "red",
+      color: 'white',
+    };
+
     let persons = null;
     if (this.state.isDisplay) {
+      style.backgroundColor = 'green';
       // If state includes an array with necessary for component data, then why not map it and pass to render method?
       persons = this.state.persons.map((person, index) => {
         return (
@@ -69,7 +75,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <button onClick={this.togglePersonsHandler}>Toggle display</button>
+          <button 
+            onClick={this.togglePersonsHandler}
+            style={style}>Toggle display</button>
           {persons}
         </header>
       </div>
