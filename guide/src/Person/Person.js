@@ -2,6 +2,7 @@ import React from 'react';
 // Import css file to use styling of component from it
 // * in this case styling is avaliable globally (in any place this file is imported)
 import './Person.css';
+import Radium from 'radium';
 
 const person = props => {
   return (
@@ -14,4 +15,4 @@ const person = props => {
 }
 
 
-export default person;
+export default Radium(person);

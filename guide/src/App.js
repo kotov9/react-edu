@@ -1,6 +1,26 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
+// Radium is a library that allows use pseudo selectors and media queries
+// in incode styling, StyleRoot is necessary if using media queries
+import Radium, {StyleRoot} from "radium";
+
+// https://github.com/FormidableLabs/radium/tree/master/docs/api#styleroot-component
+class Paragr extends Component {
+  render() {
+    const style = {
+      backgroundColor: "black",
+      width: '60%',
+      margin: 'auto',
+      color: 'white',
+      ':hover': {
+        cursor: 'pointer'
+      },
+      '@media (maxWidth: 200px)': {color: 'red !important'}
+    };
+    return <p style={style}>Hello World</p>;
+  }
+}
 
 class App extends Component {
 
@@ -51,11 +71,14 @@ class App extends Component {
     const style = {
       backgroundColor: "red",
       color: 'white',
+      ':hover': {
+        cursor: 'pointer'
+      },
     };
 
     let persons = null;
     if (this.state.isDisplay) {
-      style.backgroundColor = 'green';
+      style[':hover'].color = 'lightgreen';
       // If state includes an array with necessary for component data, then why not map it and pass to render method?
       persons = this.state.persons.map((person, index) => {
         return (
@@ -73,16 +96,19 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <button 
-            onClick={this.togglePersonsHandler}
-            style={style}>Toggle display</button>
-          {persons}
-        </header>
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <header className="App-header">
+            <button 
+              onClick={this.togglePersonsHandler}
+              style={style}>Toggle display</button>
+            {persons}
+            <Paragr/>
+          </header>
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
