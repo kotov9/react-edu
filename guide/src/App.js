@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-// Import stateless component "person"
 import Person from './Person/Person';
 
 class App extends Component {
@@ -30,19 +29,15 @@ class App extends Component {
 
     let persons = null;
     if (this.state.isDisplay) {
-      persons = (
-        <div>
+      // If state includes an array with necessary for component data, then why not map it and pass to render method?
+      persons = this.state.persons.map((person, index) => {
+        return (
           <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}/>
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}/>
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age}/>
-          </div>
-      )
+            name={person.name} 
+            age={person.age}
+            key={index}/>   // key property is necessary for react to optimise re-rendering
+        )
+      })
     }
 
     return (
