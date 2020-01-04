@@ -27,23 +27,29 @@ class App extends Component {
   }
 
   render(){
+
+    let persons = null;
+    if (this.state.isDisplay) {
+      persons = (
+        <div>
+          <Person 
+            name={this.state.persons[0].name} 
+            age={this.state.persons[0].age}/>
+          <Person 
+            name={this.state.persons[1].name} 
+            age={this.state.persons[1].age}/>
+          <Person 
+            name={this.state.persons[2].name} 
+            age={this.state.persons[2].age}/>
+          </div>
+      )
+    }
+
     return (
       <div className="App">
         <header className="App-header">
           <button onClick={this.togglePersonsHandler}>Toggle display</button>
-          {/* May use ternary operator if condition must be chosen */}
-          {this.state.isDisplay ? <div>
-            {/* Adding component just as an HTML element */}
-            <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age}/>
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}/>
-            <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age}/>
-          </div> : null}
+          {persons}
         </header>
       </div>
     );
