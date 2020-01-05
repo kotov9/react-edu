@@ -9,7 +9,7 @@ const person = props => {
     // Since class is taken name in js, className is used to define class of html element
     <div className="Person">
       <p onClick={props.clicked}>I'm {props.name}, {props.age} years old.</p>
-      <input type="text" value={props.name} onChange={props.changedName}/>
+      <input type="text" value={props.name} onChange={props.changed}/>
     </div>
   )
 }

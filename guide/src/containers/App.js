@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import Person from './Person/Person';
-// Styling using styles from css module 
-// (.module.css - only this extension is allowded for using css as modules)
-import styles from './App.module.css';
+
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+
 
 class App extends Component {
 
@@ -50,39 +50,20 @@ class App extends Component {
 
   render(){
 
-    let persons = null;
-    const buttonStyle = [styles.Button];
-
-    if (this.state.isDisplay) {
-
-      buttonStyle.push(styles.Red);
-      // If state includes an array with necessary for component data, then why not map it and pass to render method?
-      persons = this.state.persons.map((person, index) => {
-        return (
-          <Person 
-            name={person.name} 
-            age={person.age}
-            key={index}       // key property is necessary for react to optimise re-rendering
-            // if binding method needs an event argument and some other - use anonymous function
-            changedName={(event) => this.changedNameHandler(event, index)}
-            // if binding method doesn't needs an event argument, just some other - use bind method
-            clicked={this.clickedNameHandler.bind(this, index)}
-            /> 
-        )
-      })
-    } else {
-      buttonStyle.push(styles.Green);
-    }
+    let persons = this.state.isDisplay ? <Persons 
+    persons={this.state.persons}
+    changed={this.changedNameHandler}
+    clicked={this.clickedNameHandler}
+  /> : null;
 
     return (
       <div className="App">
         <header className="App-header">
           {/* Use styled button as a usual react-html element */}
-          <button
-            onClick={this.togglePersonsHandler}
-            className={buttonStyle.join(" ")}
-            >Toggle display
-          </button>
+          <Cockpit 
+            clicked={this.togglePersonsHandler}
+            display={this.state.isDisplay}
+          />
           {persons}
         </header>
       </div>
