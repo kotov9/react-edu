@@ -4,9 +4,19 @@ import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
+/* Lifecycle creation */
+// 1. constructor(props)
+// 2. static getDerivedStateFromProps(props, state) // Must be static and return updated state
+// 3. render()
+// 4. componentDidMount()
+
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+  }
   // "state" is a special name in statefull component to keep current state
   state = {
     persons: [
@@ -16,6 +26,11 @@ class App extends Component {
     ],
     info: "Very important info",
     isDisplay: true,
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps');
+    return state;
   }
 
   // Arrow function should be used to execute method with correct context
@@ -49,6 +64,7 @@ class App extends Component {
   }
 
   render(){
+    console.log('[App.js] render');
 
     let persons = this.state.isDisplay ? <Persons 
     persons={this.state.persons}
@@ -68,6 +84,10 @@ class App extends Component {
         </header>
       </div>
     );
+  }
+
+  componentDidMount(){
+    console.log('[App.js] componentDidMound');
   }
 }
 

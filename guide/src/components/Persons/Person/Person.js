@@ -5,6 +5,7 @@ import './Person.css';
 
 
 const person = props => {
+  console.log('[Person.js] render');
   return (
     // Since class is taken name in js, className is used to define class of html element
     <div className="Person">
