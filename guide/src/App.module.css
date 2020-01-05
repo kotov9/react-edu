@@ -1,0 +1,18 @@
+
+.Button {
+  color: white;
+  margin: auto;
+  text-align: center;
+}
+
+.Button:hover {
+  cursor: pointer;
+}
+
+.Red {
+  background-color: red;
+}
+
+.Green {
+  background-color: green;
+}

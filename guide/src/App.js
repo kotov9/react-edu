@@ -1,24 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
-// Styled-components libs help with inline styling
-import styled from 'styled-components';
-
-
-// Create a styled element (button) using styled-element lib 
-// (it allows pseudo selectors and media queries as well)
-// it can accept argumets (props) from outside and change property values dinamically
-const StyledButton = styled.button`
-  {
-    background-color: ${props => props.alt ? "green" : "red"};
-    color: white;
-  }
-
-  &:hover{
-    cursor: pointer;
-  }
-`;
-
+// Styling using styles from css module 
+// (.module.css - only this extension is allowded for using css as modules)
+import styles from './App.module.css';
 
 class App extends Component {
 
@@ -65,15 +50,12 @@ class App extends Component {
 
   render(){
 
-    // Such inline styling doesn't allow to use pseudo and media queries
-    const style = {
-      backgroundColor: "red",
-      color: 'white',
-    };
-
     let persons = null;
+    const buttonStyle = [styles.Button];
+
     if (this.state.isDisplay) {
-      style.backgroundColor = 'green';
+
+      buttonStyle.push(styles.Red);
       // If state includes an array with necessary for component data, then why not map it and pass to render method?
       persons = this.state.persons.map((person, index) => {
         return (
@@ -88,17 +70,19 @@ class App extends Component {
             /> 
         )
       })
+    } else {
+      buttonStyle.push(styles.Green);
     }
 
     return (
       <div className="App">
         <header className="App-header">
           {/* Use styled button as a usual react-html element */}
-          <StyledButton
+          <button
             onClick={this.togglePersonsHandler}
-            style={style}
-            alt={this.state.isDisplay}>Toggle display
-          </StyledButton>
+            className={buttonStyle.join(" ")}
+            >Toggle display
+          </button>
           {persons}
         </header>
       </div>
