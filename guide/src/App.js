@@ -1,26 +1,24 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from './Person/Person';
-// Radium is a library that allows use pseudo selectors and media queries
-// in incode styling, StyleRoot is necessary if using media queries
-import Radium, {StyleRoot} from "radium";
+// Styled-components libs help with inline styling
+import styled from 'styled-components';
 
-// https://github.com/FormidableLabs/radium/tree/master/docs/api#styleroot-component
-class Paragr extends Component {
-  render() {
-    const style = {
-      backgroundColor: "black",
-      width: '60%',
-      margin: 'auto',
-      color: 'white',
-      ':hover': {
-        cursor: 'pointer'
-      },
-      '@media (maxWidth: 200px)': {color: 'red !important'}
-    };
-    return <p style={style}>Hello World</p>;
+
+// Create a styled element (button) using styled-element lib 
+// (it allows pseudo selectors and media queries as well)
+// it can accept argumets (props) from outside and change property values dinamically
+const StyledButton = styled.button`
+  {
+    background-color: ${props => props.alt ? "green" : "red"};
+    color: white;
   }
-}
+
+  &:hover{
+    cursor: pointer;
+  }
+`;
+
 
 class App extends Component {
 
@@ -71,14 +69,11 @@ class App extends Component {
     const style = {
       backgroundColor: "red",
       color: 'white',
-      ':hover': {
-        cursor: 'pointer'
-      },
     };
 
     let persons = null;
     if (this.state.isDisplay) {
-      style[':hover'].color = 'lightgreen';
+      style.backgroundColor = 'green';
       // If state includes an array with necessary for component data, then why not map it and pass to render method?
       persons = this.state.persons.map((person, index) => {
         return (
@@ -96,19 +91,19 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <header className="App-header">
-            <button 
-              onClick={this.togglePersonsHandler}
-              style={style}>Toggle display</button>
-            {persons}
-            <Paragr/>
-          </header>
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <header className="App-header">
+          {/* Use styled button as a usual react-html element */}
+          <StyledButton
+            onClick={this.togglePersonsHandler}
+            style={style}
+            alt={this.state.isDisplay}>Toggle display
+          </StyledButton>
+          {persons}
+        </header>
+      </div>
     );
   }
 }
 
-export default Radium(App);
+export default App;
