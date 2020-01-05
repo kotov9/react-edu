@@ -4,11 +4,12 @@ import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
-/* Lifecycle creation */
-// 1. constructor(props)
-// 2. static getDerivedStateFromProps(props, state) // Must be static and return updated state
+/* Lifecycle update */
+// 1. static getDerivedStateFromProps(props, state) // Must be static and return updated state
+// 2. shouldComponentUpdate (nextProps, nextState)  // Must return boolean
 // 3. render()
-// 4. componentDidMount()
+// 4. getSnapshotBeforeUpdate(prevProps, prevState) // Must return snapshot/null
+// 5. componentDidUpdate (prevProps, prevState, snapshot)
 
 
 class App extends Component {
