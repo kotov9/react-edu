@@ -80,6 +80,7 @@ class App extends Component {
           <Cockpit 
             clicked={this.togglePersonsHandler}
             display={this.state.isDisplay}
+            persons={this.state.persons}
           />
           {persons}
         </header>
