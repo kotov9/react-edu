@@ -12,10 +12,10 @@ const Cockpit = (props) => {
   // useEffect(() => console.log('[Cockpit.js] useEffect executed.'));
 
   // useEffect is called when curtain props is changed
-  const person0 = props.persons[0]
+  const person0Length = props.persons0Length;
   useEffect(
-    () => console.log('[Cockpit.js] useEffect executed. Person[0] was changed'),
-    [person0]
+    () => console.log('[Cockpit.js] useEffect executed. Person[0] name length was changed'),
+    [person0Length]
   );
 
   // if useEffect should be executed only when rendering called the first time -
@@ -56,4 +56,6 @@ const Cockpit = (props) => {
   )
 }
 
-export default Cockpit;
+// React.memo helps control updating stateless component
+// only if it needs to be updated (if props related were changed)
+export default React.memo(Cockpit);

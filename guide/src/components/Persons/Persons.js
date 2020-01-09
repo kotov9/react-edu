@@ -16,9 +16,11 @@ class Persons extends Component {
   //   return state;
   // }
 
+  // Update component only if it's necessary (of props has changed)
+  // That's one way of performance optimization
   shouldComponentUpdate (nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
-    return true;
+    return nextProps.persons !== this.props.persons;
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
