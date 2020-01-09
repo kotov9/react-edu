@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
 
@@ -9,19 +9,22 @@ import Person from './Person/Person';
 // 4. getSnapshotBeforeUpdate(prevProps, prevState) // Must return snapshot/null
 // 5. componentDidUpdate (prevProps, prevState, snapshot)
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
   // static getDerivedStateFromProps(props, state) {
   //   console.log('[Persons.js] getDerivedStateFromProps');
   //   return state;
   // }
 
+  // !!! IN PURE COMPONENT PROPS CHECK IS EXECUTED FOR EVERY PROP
+  // AND IF ANY WAS CHANGED, THEN COMPONENT GETS UPDATED
+  
   // Update component only if it's necessary (of props has changed)
   // That's one way of performance optimization
-  shouldComponentUpdate (nextProps, nextState) {
-    console.log('[Persons.js] shouldComponentUpdate');
-    return nextProps.persons !== this.props.persons;
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   console.log('[Persons.js] shouldComponentUpdate');
+  //   return nextProps.persons !== this.props.persons;
+  // }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getSnapshotBeforeUpdate');
