@@ -27,6 +27,7 @@ class App extends Component {
     ],
     info: "Very important info",
     isDisplay: true,
+    showCockpit: true
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -76,12 +77,18 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <button
+            onClick={() => this.setState({showCockpit: false})}
+          >
+            Remove functional component "Cockpit"
+          </button>
           {/* Use styled button as a usual react-html element */}
-          <Cockpit 
-            clicked={this.togglePersonsHandler}
-            display={this.state.isDisplay}
-            persons={this.state.persons}
-          />
+          { this.state.showCockpit ?
+            <Cockpit 
+              clicked={this.togglePersonsHandler}
+              display={this.state.isDisplay}
+              persons={this.state.persons}
+            /> : null}
           {persons}
         </header>
       </div>

@@ -24,6 +24,20 @@ const Cockpit = (props) => {
     () => console.log('[Cockpit.js] useEffect executed in first rendering.'),
     []
   );
+  
+  
+  // useEffect is executed when deleting the component in case useEffect returns
+  // a function and second argument is defined
+  useEffect(() => {
+    return () => console.log('[Cockpit.js] useEffect cleanup work.');
+  }, [])
+  
+  // if useEffect returns a function and second argument is not stated, then
+  // returning function gets executed before the body of useEffect function
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect pre (after) cleanup or something else work.');
+    return () => console.log('[Cockpit.js] useEffect cleanup (or something else) work.');
+  })
 
 
   const buttonStyle = [styles.Button];
