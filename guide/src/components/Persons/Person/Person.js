@@ -7,11 +7,12 @@ import './Person.css';
 const person = props => {
   console.log('[Person.js] render');
   return (
-    // Since class is taken name in js, className is used to define class of html element
-    <div className="Person">
-      <p onClick={props.clicked}>I'm {props.name}, {props.age} years old.</p>
-      <input type="text" value={props.name} onChange={props.changed}/>
-    </div>
+    // place few jsx in array so they could be rendered without use of one all enclosing extra div
+    // each element in array MUST have unique key
+    [
+      <p key="i1" onClick={props.clicked}>I'm {props.name}, {props.age} years old.</p>,
+      <input key="i2" type="text" value={props.name} onChange={props.changed}/>
+    ]
   )
 }
 
