@@ -4,13 +4,10 @@ import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
-/* Lifecycle update */
-// 1. static getDerivedStateFromProps(props, state) // Must be static and return updated state
-// 2. shouldComponentUpdate (nextProps, nextState)  // Must return boolean
-// 3. render()
-// 4. getSnapshotBeforeUpdate(prevProps, prevState) // Must return snapshot/null
-// 5. componentDidUpdate (prevProps, prevState, snapshot)
+import Aux from '../hoc/Aux';
 
+// Another way to wrap few of jsx components
+import WithClass2 from '../hoc/withClass2';
 
 class App extends Component {
 
@@ -75,7 +72,7 @@ class App extends Component {
   /> : null;
 
     return (
-      <div className="App">
+      <Aux>
         <header className="App-header">
           <button
             onClick={() => this.setState({showCockpit: false})}
@@ -91,7 +88,7 @@ class App extends Component {
             /> : null}
           {persons}
         </header>
-      </div>
+      </Aux>
     );
   }
 
@@ -100,4 +97,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default WithClass2(App, "App");
