@@ -24,7 +24,8 @@ class App extends Component {
     ],
     info: "Very important info",
     isDisplay: true,
-    showCockpit: true
+    showCockpit: true,
+    counter: 0,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -48,8 +49,13 @@ class App extends Component {
     const person = {...persons[index]};
     person.name = event.target.value;
     persons[index] = person;
-    this.setState({
-      persons: persons
+    // If setState must change the property by using prev property of state
+    // then setState must return func like this
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        counter: prevState.counter + 1,
+      }
     })
   }
 
