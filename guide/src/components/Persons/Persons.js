@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
+// Use prop-types to observe what props are passed to component
+// and notify developer if prop type is wrong
+import PropTypes from 'prop-types';
 
 /* Lifecycle update */
 // 1. static getDerivedStateFromProps(props, state) // Must be static and return updated state
@@ -55,7 +58,12 @@ class Persons extends PureComponent {
       )
     });
   }
-  
+}
+
+Person.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  clicked: PropTypes.func,
 }
 
 

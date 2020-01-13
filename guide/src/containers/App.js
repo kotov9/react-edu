@@ -18,7 +18,7 @@ class App extends Component {
   // "state" is a special name in statefull component to keep current state
   state = {
     persons: [
-      {name: "Nikita", age: 25},
+      {name: "Nikita", age: "25"},
       {name: "Boba", age: 23},
       {name: "Banksy", age: 3}
     ],
