@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 // Import css file to use styling of component from it
 // * in this case styling is avaliable globally (in any place this file is imported)
 import styles from './Person.module.css';
@@ -21,17 +21,16 @@ const Person = props => {
     ref.current.focus();
   }, [])
   
+  // Better way of using context in functional component
+  const context = useContext(AuthContext);
+  
   console.log('[Person.js] render');
   return (
     // place few jsx in array so they could be rendered without use of one all enclosing extra div
     // each element in array MUST have unique key
     <Aux>
       <p key="i1" onClick={props.clicked}>I'm {props.name}, {props.age} years old.</p>
-      <AuthContext.Consumer>
-      {
-        (context) => context.auth ? <p>Authenticated</p> : <p>Login, please.</p>
-      }
-      </AuthContext.Consumer>
+      {context.auth ? <p>Authenticated</p> : <p>Login, please.</p>}
       <input key="i2"
              type="text" 
              value={props.name} 
