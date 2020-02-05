@@ -6,6 +6,9 @@ import styles from './Person.module.css';
 import withClass2 from '../../../hoc/withClass2';
 import Aux from '../../../hoc/Aux';
 
+// Use Context to pass props deep in components tree.
+import AuthContext from '../../../context/AuthContext.js';
+
 
 const Person = props => {
   
@@ -24,6 +27,11 @@ const Person = props => {
     // each element in array MUST have unique key
     <Aux>
       <p key="i1" onClick={props.clicked}>I'm {props.name}, {props.age} years old.</p>
+      <AuthContext.Consumer>
+      {
+        (context) => context.auth ? <p>Authenticated</p> : <p>Login, please.</p>
+      }
+      </AuthContext.Consumer>
       <input key="i2"
              type="text" 
              value={props.name} 

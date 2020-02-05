@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import styles from './Cockpit.module.css';
+
+// Use Context to pass props deep in components tree.
+import AuthContext from '../../context/AuthContext.js';
+
 
 // Case of component name matters (must start with capital one)
 const Cockpit = (props) => {
@@ -48,11 +52,18 @@ const Cockpit = (props) => {
   }
 
   return (
-    <button
-      onClick={props.clicked}
-      className={buttonStyle.join(" ")}
-      >Toggle display
-    </button>
+    <Fragment>
+      <AuthContext.Consumer>
+      {
+        (context) => <button onClick={context.login}>Login</button>
+      }
+      </AuthContext.Consumer>
+      <button
+        onClick={props.clicked}
+        className={buttonStyle.join(" ")}
+        >Toggle display
+      </button>
+    </Fragment>
   )
 }
 

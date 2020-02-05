@@ -9,6 +9,9 @@ import Aux from '../hoc/Aux';
 // Another way to wrap few of jsx components
 import WithClass2 from '../hoc/withClass2';
 
+// Use Context to pass props deep in components tree.
+import AuthContext from '../context/AuthContext.js';
+
 class App extends Component {
 
   constructor(props) {
@@ -31,6 +34,7 @@ class App extends Component {
     isDisplay: true,
     showCockpit: true,
     counter: 0,
+    isAuthenticated: false,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -72,6 +76,10 @@ class App extends Component {
       persons: persons
     })
   }
+  
+  loginHandler = () => {
+    this.setState({isAuthenticated: true});
+  }
 
   render(){
     console.log('[App.js] render');
@@ -84,25 +92,30 @@ class App extends Component {
 
     return (
       <Aux>
-        <header className="App-header">
-          <button
-            onClick={() => this.setState({showCockpit: false})}
-          >
-            Remove functional component "Cockpit"
-          </button>
-          {/* Use styled button as a usual react-html element */}
-          { this.state.showCockpit ?
-            <Cockpit 
-              clicked={this.togglePersonsHandler}
-              display={this.state.isDisplay}
-              person0Length={this.state.persons[0].name.length}
-            /> : null}
-          {persons}
-          <input type="text" 
-          ref={this.input1Ref} /> {/* ref is a key attribute that must have a ref value*/}
-          <input type="text" 
-          ref={this.input2Ref} />
-        </header>
+        <AuthContext.Provider value={{
+                  auth: this.state.isAuthenticated,
+                  login: this.loginHandler,
+        }}>
+          <header className="App-header">
+            <button
+              onClick={() => this.setState({showCockpit: false})}
+            >
+              Remove functional component "Cockpit"
+            </button>
+            {/* Use styled button as a usual react-html element */}
+            { this.state.showCockpit ?
+              <Cockpit 
+                clicked={this.togglePersonsHandler}
+                display={this.state.isDisplay}
+                person0Length={this.state.persons[0].name.length}
+              /> : null}
+            {persons}
+            <input type="text" 
+            ref={this.input1Ref} /> {/* ref is a key attribute that must have a ref value*/}
+            <input type="text" 
+            ref={this.input2Ref} />
+          </header>
+        </AuthContext.Provider>
       </Aux>
     );
   }
