@@ -13,6 +13,11 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    
+    // Create Refs to component
+    this.input1Ref = React.createRef();
+    this.input2Ref = React.createRef();
+    
     console.log('[App.js] constructor');
   }
   // "state" is a special name in statefull component to keep current state
@@ -93,12 +98,21 @@ class App extends Component {
               person0Length={this.state.persons[0].name.length}
             /> : null}
           {persons}
+          <input type="text" 
+          ref={this.input1Ref} /> {/* ref is a key attribute that must have a ref value*/}
+          <input type="text" 
+          ref={this.input2Ref} />
         </header>
       </Aux>
     );
   }
 
   componentDidMount(){
+    
+    // Manipulate component using ref to it
+    this.input2Ref.current.focus();
+    this.input1Ref.current.value = "Value through ref";
+    
     console.log('[App.js] componentDidMound');
   }
 }
