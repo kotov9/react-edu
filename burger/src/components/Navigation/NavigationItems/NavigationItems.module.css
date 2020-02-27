@@ -3,7 +3,14 @@
   padding: 0;
   margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   height: 100%;
   box-sizing: border-box;
+}
+
+@meadia (min-width: 500px) {
+  .NavigationItems {
+    flex-direction: row;
+  }
 }
