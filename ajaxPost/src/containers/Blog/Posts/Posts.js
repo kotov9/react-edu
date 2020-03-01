@@ -22,6 +22,8 @@ class Posts extends Component {
             this.setState({ posts: updatedPosts})
         })
         .catch(error => console.log(error));
+
+        console.log(this.props);
     }
 
     postSelectedHandler = id => {
