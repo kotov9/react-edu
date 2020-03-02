@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Post from '../../../components/Post/Post';
 import axios from '../../../axios';
 import './Posts.css';
+import FullPost from '../FullPost/FullPost';
+import { Route } from 'react-router-dom';
 
 
 class Posts extends Component {
@@ -11,28 +13,28 @@ class Posts extends Component {
 
     componentDidMount() {
         axios.get('/posts')
-        .then(response => {
-            const posts = response.data.slice(0, 5);
-            const updatedPosts = posts.map(post => {
-                return {
-                    ...post,
-                    author: 'Biba'
-                }
+            .then(response => {
+                const posts = response.data.slice(0, 5);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Biba'
+                    }
+                })
+                this.setState({ posts: updatedPosts })
             })
-            this.setState({ posts: updatedPosts})
-        })
-        .catch(error => console.log(error));
+            .catch(error => console.log(error));
 
         console.log(this.props);
     }
 
     postSelectedHandler = id => {
-        this.props.history.push({pathname: '/' + id})
+        this.props.history.push({ pathname: '/posts/' + id })
     }
-    
+
 
     render() {
-        let posts = <p style={{textAlign: 'center'}}>Something went wrong...</p>;
+        let posts = <p style={{ textAlign: 'center' }}>Something went wrong...</p>;
         if (!this.state.error) {
             posts = this.state.posts.map(post => {
                 return (
@@ -44,9 +46,14 @@ class Posts extends Component {
                 )
             })
         }
-        return <section className="Posts">
-            {posts}
-         </section>;
+        return (
+            <div>
+                <section className="Posts">
+                    {posts}
+                </section>
+                <Route path={this.props.match.url + '/:id'} component={FullPost} />
+            </div>
+        );
     }
 }
 
