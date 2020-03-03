@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-@meadia (min-width: 500px) {
+@media (min-width: 500px) {
   .NavigationItems {
     flex-direction: row;
   }
