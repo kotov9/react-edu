@@ -4,9 +4,7 @@
   text-align: center;
 }
 
-.Input {
-  display: block;
-}
+
 
 @media (width: 500px) {
   .ContactData {
