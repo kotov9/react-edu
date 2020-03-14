@@ -16,7 +16,7 @@ const reducer = (state=initialState, action) => {
     case 'ADD_COUNTER':
       return {
         ...state,
-        counter: state.counter + 10
+        counter: state.counter + action.value
       }
     default:
       return state;
