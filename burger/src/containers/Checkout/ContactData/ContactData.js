@@ -5,6 +5,8 @@ import axios from '../../../axios-order';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
+import {connect} from 'react-redux';
+
 
 class ContactData extends Component {
   state = {
@@ -121,8 +123,8 @@ class ContactData extends Component {
     }
     // .json extension is added only to deal with request correctly on firebase side
     const order = {
-      ingredients: this.props.ingredients,
-      price: this.props.price,
+      ingredients: this.props.ings,
+      price: this.props.price.toFixed(2),
       orderData: formData
       
     }
@@ -191,5 +193,11 @@ class ContactData extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.price
+  }
+}
 
-export default ContactData;
+export default connect(mapStateToProps)(ContactData);
