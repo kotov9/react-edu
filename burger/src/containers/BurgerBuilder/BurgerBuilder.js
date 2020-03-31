@@ -9,12 +9,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import {connect} from 'react-redux';
-import {
-  addIngredient, 
-  removeIngredient, 
-  initIngredients,
-  purchaseInit
-} from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 
 
 class BurgerBuilder extends Component {
@@ -38,9 +33,13 @@ class BurgerBuilder extends Component {
   
   purchaseContinueHandler = () => {
     this.props.onInitPurchase();
-    this.props.history.push({
-      pathname: '/checkout',
-    });
+    
+    if (this.props.isAuth) {
+      this.props.history.push({pathname: '/checkout'});
+    } else {
+      this.props.onSetRedirectAuthPath('/checkout');
+      this.props.history.push({pathname: '/auth'});
+    }
   }
   
   updatePurhaseState (ingredients) {
@@ -69,7 +68,8 @@ class BurgerBuilder extends Component {
             disabled={disabledIngr}
             price={this.props.price.toFixed(2)}
             purchasable={this.updatePurhaseState(this.props.ings)}
-            purchasing={this.purchaseHandler}/>
+            purchasing={this.purchaseHandler}
+            isAuth={this.props.isAuth}/>
         </Aux>
       )
       
@@ -99,16 +99,18 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.price,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuth: state.auth.token !== null,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
-    onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName)),
-    onIngredientsInit: () => dispatch(initIngredients()),
-    onInitPurchase: () => dispatch(purchaseInit())
+    onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+    onIngredientsInit: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit()),
+    onSetRedirectAuthPath: (path) => dispatch(actions.setRedirectAuthPath(path))
   }
 }
 

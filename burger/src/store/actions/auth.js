@@ -39,6 +39,14 @@ export const checkLogoutTimeout = (timeout) => {
   }
 }
 
+export const setRedirectAuthPath = (path) => {
+  console.log('PATH: ', path)
+  return {
+    type: actionTypes.SET_REDIRECT_AUTH_PATH,
+    path: path
+  }
+}
+
 export const auth = (email, password, isSignup) => {
   return dispatch => {
     dispatch(authStart());
