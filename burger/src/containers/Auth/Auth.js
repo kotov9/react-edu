@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+
 import classes from './Auth.module.css'
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
 import * as actions from '../../store/actions/index';
 
 
@@ -44,6 +44,8 @@ class Auth extends React.Component {
     isSignup: true,
   }
   
+  // On component did mount check if user got here after trying to order a built burger
+  // if not so, redirect user to main page after authentication process
   componentDidMount() {
     if (!this.props.buildingBurger && this.props.redirectAuthPath !== '/') {
       this.props.onSetRedirectAuthPath('/');
@@ -79,20 +81,23 @@ class Auth extends React.Component {
     this.setState({controls: updatedControlsForm});
   }
   
+  // Call authentication action (-> reducer) to log user up/in on submit
   submitHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup)
   }
   
+  // Switch signin/signup mode
   switchAuthModeHandler = () => {
-      this.setState((prevState) => {
-        return {
-          isSignup: !prevState.isSignup
-        }
-      })
-    }
+    this.setState((prevState) => {
+      return {
+        isSignup: !prevState.isSignup
+      }
+    })
+  }
   
   render() {
+    // Create array of form inputs to show
     const formElements = [];
     for (let key in this.state.controls) {
       formElements.push({
@@ -101,6 +106,7 @@ class Auth extends React.Component {
       })
     }
     
+    // Map input elements
     let form = formElements.map(element => {
       return (
         <Input 
@@ -119,7 +125,9 @@ class Auth extends React.Component {
       form = <Spinner/>;
     }
     
+    // Show error if needed
     const errorMessage = (this.props.error) ? this.props.error.message : null;
+    // On successful authentication redirect to 'redirectAuthPath' ('/'' or '/checkout')
     const authRedirect = this.props.isAuth ? <Redirect to={this.props.redirectAuthPath}/> : null;
     
     return (

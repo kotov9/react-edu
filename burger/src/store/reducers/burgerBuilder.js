@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../utility';
 
+// Set initial state
 const initialState = {
   ingredients: null,
   price: 3,
@@ -15,6 +16,7 @@ const INGREDIENT_PRICES = {
   bacon: 1.2
 }
 
+// Define functions to use them in reducers
 const addIngredient = (state, action) => {
   const updatedIngredient = {[action.ingredientName]: state.ingredients[action.ingredientName] + 1};
   const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
@@ -42,7 +44,7 @@ const fetchIngredientsFailed = (state, action) => {
   return updateObject(state, {error: true});
 }
 
-
+// Define reducer
 export default (state=initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT: return addIngredient(state, action);

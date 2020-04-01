@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-order';
 
+// Create actions regarding burger builder -------------------------------------
 export const addIngredient = (ingName) => {
   return {
     type: actionTypes.ADD_INGREDIENT,
@@ -28,6 +29,7 @@ export const fetchIngredientsFailed = () => {
   }
 }
 
+// Async func is valid due to 'redux-thunk'
 export const initIngredients = () => {
   return dispatch => {
     axios.get('/ingredients.json')

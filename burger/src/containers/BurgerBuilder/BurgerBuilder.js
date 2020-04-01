@@ -1,37 +1,45 @@
 import React, { Component } from 'react';
+import axios from '../../axios-order';
+import {connect} from 'react-redux';
+
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 
 class BurgerBuilder extends Component {
   
   state = {
-    purchasing: false,
-    loading: false,
+    purchasing: false,  // true if user decided to purchase burger
+    loading: false,     // true if loading of ingredients from the server is in the process
   }
   
+  // Once component mounted - init ingredients set (load allowed ingredients from the server)
+  // Ingredients are available via redux
   componentDidMount() {
     this.props.onIngredientsInit();
   }
   
+  // If user clicked order button - show order summury before continue
   purchaseHandler = () => {
     this.setState({purchasing: true})
   }
   
+  // If user want to cancel purchase - hide order summary modal window
   purchaseCancelHandler = () => {
     this.setState({purchasing: false})
   }
   
+  // If user want to make an order - redirect user to checkout page
+  // or to signing up page (if not signed up/signed in)
   purchaseContinueHandler = () => {
+    // Set initial state 
     this.props.onInitPurchase();
     
     if (this.props.isAuth) {
@@ -42,20 +50,25 @@ class BurgerBuilder extends Component {
     }
   }
   
+  // If user has chosen at least one ingredient - make order button clickable
   updatePurhaseState (ingredients) {
     return Object.values(ingredients).some(val => val > 0);
   }
   
   render() {
+    // Make 'less' button of ingredients choosing disabled if none ingredients
+    // chosen
     const disabledIngr = {...this.props.ings};
     
     for (let type in disabledIngr) {
       disabledIngr[type] = disabledIngr[type] <= 0;
     }
     
+    // If ingredients couldn't be loaded from the server - display an error
     let burger = this.props.error ? <p>Ingredients can't be loaded...</p> : <Spinner/>;
     let orderSummary = null;
     
+    // If ingredients were loaded - display burger building field
     if (this.props.ings) {
       burger = (
         <Aux>
@@ -114,4 +127,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+// Make redux store states and actions available in component 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));

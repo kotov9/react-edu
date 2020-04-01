@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Order from '../../components/Order/Order';
 import axios from '../../axios-order';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
 
@@ -13,6 +14,7 @@ class Orders extends Component {
     loading: true
   }
   
+  // Get orders related to signed in user
   componentDidMount() {
     this.props.onFetchOrders(this.props.token, this.props.userId);
   }

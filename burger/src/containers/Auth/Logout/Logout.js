@@ -4,10 +4,12 @@ import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
 class Logout extends React.Component {
+  // Logout once user pressed logout button or entered '/logout' in url.
   componentDidMount() {
     this.props.onLogout();
   }
   
+  // Redirect to main page
   render () {
     return <Redirect to="/"/>
   }

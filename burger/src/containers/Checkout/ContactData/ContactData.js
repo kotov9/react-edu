@@ -97,6 +97,7 @@ class ContactData extends Component {
     formIsValid: false,
   }
   
+  // Check input data in input field
   checkValidity(value, rules) {
     let isValid = true;
     
@@ -115,6 +116,7 @@ class ContactData extends Component {
     return isValid;
   }
   
+  // On submit handler (once user filled form and clicked order (submit) button)
   orderHandler = (event) => {
     
     event.preventDefault();
@@ -129,7 +131,6 @@ class ContactData extends Component {
       price: this.props.price.toFixed(2),
       orderData: formData,
       userId: this.props.userId,
-      
     }
     this.props.onOrderBurger(order, this.props.token);
   }

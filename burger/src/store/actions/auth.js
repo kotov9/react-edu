@@ -17,6 +17,7 @@ export const authFail = (error) => {
   }
 }
 
+// On successful signing in/up - save user token and id in store
 export const authSuccess = (userId, idToken) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
@@ -25,6 +26,7 @@ export const authSuccess = (userId, idToken) => {
   }
 }
 
+// Remove user id, token and expiration date on logout
 export const authLogout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userId');
@@ -34,6 +36,7 @@ export const authLogout = () => {
   }
 }
 
+// Log user out if expiration time has passed (it's async action)
 export const checkLogoutTimeout = (timeout) => {
   return dispatch => {
     setTimeout(() => {
@@ -42,14 +45,15 @@ export const checkLogoutTimeout = (timeout) => {
   }
 }
 
+// Define redirect path after authentication
 export const setRedirectAuthPath = (path) => {
-  console.log('PATH: ', path)
   return {
     type: actionTypes.SET_REDIRECT_AUTH_PATH,
     path: path
   }
 }
 
+// Sign user in/up (async action)
 export const auth = (email, password, isSignup) => {
   return dispatch => {
     dispatch(authStart());
@@ -63,7 +67,6 @@ export const auth = (email, password, isSignup) => {
     }
     axios.post(url, postData)
     .then(response => {
-      console.log(response.data);
       // Save cridentials to local storage
       const expirationDate = new Date(new Date().getTime() + response.data.expiresIn*1000)
       localStorage.setItem('token', response.data.idToken);
@@ -74,13 +77,14 @@ export const auth = (email, password, isSignup) => {
       dispatch(checkLogoutTimeout(response.data.expiresIn));
     })
     .catch(error => {
-      console.log(error);
       dispatch(authFail(error.response.data.error));
     })
   }
 }
 
-
+// If user reloaded page, keep user logged in if he was logged in before
+// and expiration time hasn't passed
+// Otherwise log user out
 export const checkAuthState = () => {
   return dispatch => {
     const token = localStorage.getItem('token');
@@ -98,5 +102,4 @@ export const checkAuthState = () => {
       dispatch(authLogout())
     }
   }
-  
 }
