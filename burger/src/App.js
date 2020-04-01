@@ -8,9 +8,14 @@ import { Route, Switch } from 'react-router-dom';
 import Orders from './containers/Orders/Orders';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import {connect} from 'react-redux';
+import * as actions from './store/actions/index';
 
 
 class App extends Component {
+  componentDidMount() {
+    this.props.onCheckAuthState();
+  }
   
   render() {
     return (
@@ -35,12 +40,16 @@ class App extends Component {
               exact
               component={BurgerBuilder}/>
           </Switch>
-          
-          
         </Layout>
       </Aux>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onCheckAuthState: () => dispatch(actions.checkAuthState()),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);
