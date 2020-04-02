@@ -13,7 +13,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 
 
-class BurgerBuilder extends Component {
+// export so this container could be tested (without considering redux)
+export class BurgerBuilder extends Component {
   
   state = {
     purchasing: false,  // true if user decided to purchase burger
@@ -79,7 +80,7 @@ class BurgerBuilder extends Component {
             add={this.props.onIngredientAdded}
             remove={this.props.onIngredientRemoved}
             disabled={disabledIngr}
-            price={this.props.price.toFixed(2)}
+            price={this.props.price}
             purchasable={this.updatePurhaseState(this.props.ings)}
             purchasing={this.purchaseHandler}
             isAuth={this.props.isAuth}/>
@@ -88,7 +89,7 @@ class BurgerBuilder extends Component {
       
       orderSummary = <OrderSummary 
             ingredients={this.props.ings}
-            price={this.props.price.toFixed(2)}
+            price={this.props.price}
             cancelPurchase={this.purchaseCancelHandler}
             continuePurchase={this.purchaseContinueHandler}/>
     }
@@ -111,7 +112,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
-    price: state.burgerBuilder.price,
+    price: state.burgerBuilder.price.toFixed(2),
     error: state.burgerBuilder.error,
     isAuth: state.auth.token !== null,
   }
